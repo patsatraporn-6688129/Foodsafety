@@ -57,7 +57,13 @@ button { font-family: inherit; cursor: pointer; border: none; }
   box-shadow: 0 2px 6px rgba(0,0,0,.06);
 }
 .brand-ico { font-size: 18px; }
-.topbar-actions { display: flex; gap: 10px; }
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
+.topbar-coins {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #fff6d6; border: 2px solid var(--yellow);
+  border-radius: 999px; height: 46px; padding: 0 16px;
+  font-weight: 900; color: #9a8400; font-size: 14px; white-space: nowrap;
+}
 .round-btn {
   width: 46px; height: 46px; border-radius: 50%;
   background: #ffffff; color: var(--green-deep);
@@ -77,16 +83,21 @@ button { font-family: inherit; cursor: pointer; border: none; }
   padding: 40px 20px 60px; text-align: center;
 }
 .logo-badge {
-  position: relative; width: 130px; height: 130px; background: #a9e0c6;
+  position: relative; z-index: 0; width: 130px; height: 130px; background: #a9e0c6;
   border-radius: 34px; display: grid; place-items: center;
-  box-shadow: 0 0 0 18px #d8f0e5aa; margin-bottom: 18px;
+  box-shadow: 0 0 0 18px #d8f0e5aa, 0 0 45px 28px rgba(247,209,84,.5);
+  margin-bottom: 18px;
 }
 .logo-fridge { font-size: 64px; }
 .logo-dot { position: absolute; width: 34px; height: 34px; border-radius: 50%; }
 .logo-dot--red { top: -6px; right: -6px; background: #f4a08c; }
 .logo-dot--yellow { bottom: 6px; left: -10px; background: var(--yellow); }
-.title { font-size: 46px; line-height: 1; margin: 6px 0 4px; color: var(--green-dark); font-weight: 900; letter-spacing: 1px; }
-.subtitle { letter-spacing: 3px; font-weight: 800; font-size: 13px; color: var(--muted); margin: 0 0 26px; }
+.title { position: relative; z-index: 1; font-size: 46px; line-height: 1; margin: 6px 0 4px; color: var(--green-dark); font-weight: 900; letter-spacing: 1px; }
+.subtitle { position: relative; z-index: 1; letter-spacing: 3px; font-weight: 800; font-size: 13px; color: var(--muted); margin: 0 0 26px; }
+.menu-wallet {
+  display: inline-flex; align-items: center; gap: 6px; background: #fff6d6; border: 2px solid var(--yellow);
+  border-radius: 999px; padding: 7px 18px; font-weight: 900; color: #9a8400; margin: 0 0 18px;
+}
 .menu-row { display: flex; gap: 16px; margin-top: 22px; }
 .pill {
   border-radius: 18px; padding: 14px 24px; font-weight: 800; font-size: 14px; color: #fff;
@@ -101,6 +112,122 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .pill-grey { background: #d7dde1; color: var(--ink); }
 .pill-orange { background: var(--orange); }
 
+/* ---------- Menu: profile link under the pill row ---------- */
+.menu-profile-link {
+  margin-top: 18px; background: none; border: none;
+  color: var(--muted); font-weight: 700; font-size: 14px;
+  text-decoration: underline; cursor: pointer;
+}
+.menu-profile-link:hover { color: var(--green-dark); }
+
+/* ---------- Difficulty / skill-tier select ---------- */
+.difficulty-screen { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 48px 20px 60px; text-align: center; }
+.difficulty-title { color: var(--green-dark); font-size: 32px; font-weight: 900; margin: 0 0 8px; }
+.difficulty-sub { color: var(--ink); font-weight: 600; margin: 0 0 32px; max-width: 480px; }
+.difficulty-list { display: flex; flex-direction: column; gap: 18px; width: 100%; max-width: 480px; }
+.difficulty-card {
+  text-align: left; border: none; border-radius: 20px; padding: 20px 22px;
+  cursor: pointer; background: linear-gradient(120deg, #eaf7f1, #cdeee1);
+  box-shadow: var(--shadow); transition: transform .15s ease, box-shadow .15s ease;
+}
+.difficulty-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.difficulty-card--selected { outline: 3px solid var(--teal); }
+.difficulty-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.difficulty-emoji { font-size: 22px; }
+.difficulty-name { color: var(--green-dark); font-weight: 800; font-size: 17px; }
+.difficulty-desc { color: var(--ink); font-weight: 500; font-size: 14px; margin: 0; }
+.difficulty-back { margin-top: 36px; padding: 12px 28px; }
+
+/* ---------- Always-on guidance banner (Fridge Freshies) ---------- */
+.guide-banner {
+  background: #fff6d6; border: 2px solid var(--yellow); border-radius: 16px;
+  padding: 12px 16px; margin: 14px 24px 18px; font-size: 13px;
+}
+.guide-banner-title { font-weight: 800; color: #7a6a10; display: block; margin-bottom: 4px; }
+.guide-banner-list { margin: 0; padding-left: 18px; color: var(--ink); }
+.guide-banner-list li { margin: 2px 0; }
+
+/* ---------- Profile page ---------- */
+.profile-screen { flex: 1; padding: 24px 20px 50px; max-width: 520px; margin: 0 auto; width: 100%; }
+.profile-heading { text-align: center; color: var(--green-dark); font-size: 40px; font-weight: 900; margin: 8px 0 20px; }
+.profile-card2 {
+  position: relative; background: #fff; border-radius: 24px;
+  padding: 26px 24px 26px; box-shadow: var(--shadow-lg);
+}
+.profile-loading { text-align: center; color: var(--muted); }
+
+.profile-gear {
+  position: absolute; top: 20px; right: 20px; background: none; border: none;
+  font-size: 22px; color: var(--green-dark); cursor: pointer; line-height: 1;
+}
+.profile-gear:hover { transform: rotate(30deg); }
+
+.profile-id { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.profile-avatar {
+  width: 84px; height: 84px; border-radius: 50%; flex: none;
+  background: radial-gradient(circle at 50% 40%, #d5f0e2 0%, #a9dcc5 100%);
+  outline: 4px solid #d5f0e2; display: grid; place-items: center; font-size: 44px;
+}
+.profile-name { color: var(--green-dark); font-weight: 900; font-size: 24px; line-height: 1.1; }
+.profile-level { color: var(--muted); font-weight: 800; font-size: 14px; letter-spacing: .5px; margin-top: 4px; }
+
+.profile-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border: 1px solid #e7ece9; border-radius: 16px; padding: 16px 0; margin-bottom: 24px;
+}
+.profile-stat { text-align: center; position: relative; }
+.profile-stat + .profile-stat::before {
+  content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px; background: #e7ece9;
+}
+.profile-stat-ico { font-size: 26px; line-height: 1; margin-bottom: 6px; }
+.profile-stat-val { color: var(--ink); font-weight: 800; font-size: 18px; }
+
+.profile-section-head { text-align: center; color: var(--green-dark); font-size: 20px; font-weight: 900; margin: 6px 0 14px; }
+
+.profile-badges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 22px; }
+.profile-badge { text-align: center; }
+.profile-badge-medal { font-size: 56px; line-height: 1; filter: drop-shadow(0 3px 4px rgba(0,0,0,.15)); }
+.profile-badge-name { color: var(--ink); font-weight: 700; font-size: 13px; margin-top: 4px; }
+
+.profile-back { display: block; margin: 26px auto 0; }
+.profile-logout {
+  display: block; margin: 14px auto 0; background: none; border: none;
+  color: var(--muted); font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: underline;
+}
+.profile-logout:hover { color: var(--red); }
+
+/* ---------- Auth (login / sign-up) ---------- */
+.auth { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px 60px; }
+.auth-card {
+  background: #fff; width: 100%; max-width: 380px; border-radius: 24px;
+  padding: 30px 30px 34px; box-shadow: var(--shadow-lg);
+  display: flex; flex-direction: column;
+}
+.auth-title { color: var(--green-dark); font-size: 30px; font-weight: 900; text-align: center; margin: 0; }
+.auth-title--plain { margin-bottom: 22px; }
+.auth-sub { text-align: center; color: var(--muted); font-weight: 600; margin: 6px 0 24px; }
+.auth-label { font-weight: 800; color: var(--ink); font-size: 14px; margin: 14px 0 6px; }
+.auth-field {
+  display: flex; align-items: center; gap: 10px;
+  border: 2px solid #e4e8eb; border-radius: 26px; padding: 8px 14px; background: #fff;
+  transition: border-color .12s ease;
+}
+.auth-field:focus-within { border-color: var(--teal); }
+.field-ico { width: 26px; height: 26px; border-radius: 50%; background: #e2f3ea; display: grid; place-items: center; flex: none; }
+.auth-field input { border: none; outline: none; flex: 1; min-width: 0; font-family: inherit; font-size: 15px; font-weight: 600; color: var(--ink); background: transparent; }
+.auth-field input::placeholder { color: #9aa4ab; font-weight: 500; }
+.auth-btn { width: 100%; margin-top: 24px; padding: 14px; font-size: 17px; border-radius: 26px; }
+.auth-forgot { background: none; color: var(--green-dark); font-weight: 800; font-size: 14px; margin: 16px auto 0; }
+.auth-or { text-align: center; color: var(--muted); font-weight: 700; margin: 8px 0; }
+.auth-create {
+  background: #fff; border: 2px solid #dfe4e7; color: var(--green-dark); font-weight: 800; font-size: 14px;
+  border-radius: 24px; padding: 10px 22px; margin: 0 auto;
+  transition: transform .1s ease, box-shadow .12s ease;
+}
+.auth-create:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(40,60,50,.14); }
+.auth-switch { text-align: center; color: var(--muted); font-weight: 600; margin: 18px 0 0; font-size: 14px; }
+.auth-link { background: none; color: var(--green-dark); font-weight: 800; }
+
 /* ---------- Buttons ---------- */
 .btn { border-radius: 18px; font-weight: 900; font-size: 20px; padding: 16px 28px; transition: transform .08s ease, filter .15s ease; }
 .btn:active { transform: translateY(2px); }
@@ -112,7 +239,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
 /* Menu Play button — wide, with circular play-icon badge (matches mockup) */
 .menu-play {
   display: inline-flex; align-items: center; justify-content: center; gap: 16px;
-  width: 380px; max-width: 86vw; padding: 18px 40px;
+  width: 350px; max-width: 86vw; padding: 18px 40px;
 }
 .menu-play:hover { transform: translateY(-4px) scale(1.04); }
 .menu-play:active { transform: translateY(0) scale(1); }
@@ -127,16 +254,109 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .btn-mint:hover { background: #d6eee1; }
 
 /* ---------- Tips (vertically centered) ---------- */
-.tips { flex: 1; padding: 30px 20px 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.tips-heading { background: #fff; color: var(--green-dark); font-weight: 900; font-size: 34px; padding: 16px 40px; border-radius: 40px; box-shadow: var(--shadow); margin-bottom: 28px; }
+.tips { flex: 1; padding: 30px 20px 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.tips-heading { background: none; box-shadow: none; color: var(--green-dark); font-weight: 900; font-size: 40px; padding: 0; border-radius: 0; margin: 0 0 10px; }
+.tips-subheading { color: var(--muted); font-weight: 600; font-size: 17px; margin: 0 0 28px; }
+.tips-subheading span { color: var(--green-dark); font-weight: 800; }
 .tips-grid { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; }
 .tip-card { background: #fff; width: 240px; border-radius: 24px; padding: 24px; box-shadow: var(--shadow); text-align: center; }
-.tip-img { background: #f3f5f2; width: 120px; height: 120px; border-radius: 20px; display: grid; place-items: center; margin: 0 auto 14px; overflow: hidden; }
+.tip-img { background: #f3f5f2; width: 100%; aspect-ratio: 1 / 1; border-radius: 20px; display: grid; place-items: center; margin: 0 auto 18px; overflow: hidden; }
 .tip-img img { max-width: 88%; max-height: 88%; object-fit: contain; }
-.tip-card h3 { color: var(--green-dark); margin: 6px 0; font-size: 22px; }
+.tip-head { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.tip-badge {
+  width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 16px; flex-shrink: 0; color: #fff;
+}
+.tip-badge--teal { background: var(--teal); }
+.tip-badge--yellow { background: var(--yellow-dark); }
+.tip-badge--pink { background: #e0768a; }
+.tip-card h3 { color: var(--green-dark); margin: 6px 0; font-size: 20px; }
+.tip-underline { display: block; width: 46px; height: 3px; border-radius: 2px; margin: 4px auto 14px; }
+.tip-underline--teal { background: var(--teal); }
+.tip-underline--yellow { background: var(--yellow-dark); }
+.tip-underline--pink { background: #e0768a; }
 .tip-card p { color: var(--muted); margin: 0; font-weight: 600; }
 .tips-start { margin-top: 30px; }
 .tips-note { letter-spacing: 2px; font-weight: 800; color: var(--yellow-dark); font-size: 12px; margin-top: 12px; }
+
+/* ---------- Story intro (e.g. Level 10's supermarket run) ---------- */
+.story { flex: 1; padding: 30px 20px 50px; display: flex; align-items: center; justify-content: center; }
+.story-card {
+  background: #fff; width: 460px; max-width: 92vw; border-radius: 28px;
+  padding: 30px 34px 34px; box-shadow: var(--shadow-lg); text-align: center;
+}
+.story-scene {
+  width: 100%; max-width: 320px; height: auto; margin: 0 auto 20px; display: block;
+  background: linear-gradient(180deg, #eaf6f0, #f8f4e6); border-radius: 20px; padding: 10px;
+  object-fit: contain; /* keeps supermarket.png's own aspect ratio if it differs from 320:180 */
+}
+.story-title { color: var(--green-dark); font-weight: 900; font-size: 28px; margin: 0 0 8px; }
+.story-sub { color: var(--ink); font-weight: 600; font-size: 15px; margin: 0 0 10px; }
+.story-caption { color: var(--muted); font-weight: 600; font-size: 14px; line-height: 1.5; margin: 0 0 22px; }
+.story-caption strong { color: var(--green-dark); }
+.story-start { width: 100%; }
+
+/* ---------- How to Play (Help) ---------- */
+.howto { flex: 1; padding: 46px 20px 60px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.howto-title { color: var(--green-dark); font-size: 44px; font-weight: 900; margin: 0 0 8px; }
+.howto-sub { color: var(--ink); font-weight: 700; font-size: 18px; margin: 0 0 40px; }
+.howto-grid { display: flex; gap: 26px; flex-wrap: wrap; justify-content: center; }
+.howto-card {
+  background: #ffffffcc; width: 290px; border-radius: 26px; padding: 28px 26px 30px;
+  box-shadow: var(--shadow); text-align: center;
+}
+.howto-card h3 { color: var(--green-dark); font-size: 22px; margin: 22px 0 10px; line-height: 1.25; }
+.howto-card p { color: var(--muted); font-weight: 600; margin: 0; font-size: 15px; }
+.howto-illus {
+  position: relative; background: #fbfaf6; border-radius: 20px; height: 200px;
+  display: grid; place-items: center; overflow: hidden;
+}
+/* Step 1 */
+.howto-shelf {
+  width: 130px; height: 120px; background: #fff; border-radius: 22px;
+  box-shadow: inset 0 0 0 6px #f1f3ef; display: grid; place-items: center;
+}
+.howto-item {
+  width: 78px; height: 96px; background: var(--teal); border-radius: 18px;
+  display: grid; place-items: center; box-shadow: 0 8px 16px rgba(40,60,50,.2);
+  position: relative;
+}
+.howto-item::after {
+  content: ""; position: absolute; top: 10px; left: 12px; width: 22px; height: 34px;
+  border-radius: 12px; background: rgba(255,255,255,.35);
+}
+.howto-cursor { position: absolute; right: 34px; bottom: 26px; font-size: 30px; }
+/* Step 2 */
+.howto-clock {
+  width: 128px; height: 128px; border-radius: 50%; background: var(--yellow);
+  display: grid; place-items: center; font-size: 54px;
+  box-shadow: 0 10px 20px rgba(200,175,20,.28);
+}
+.howto-dot { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--red); }
+.howto-dot--tr { top: 40px; right: 58px; }
+.howto-dot--bl { bottom: 46px; left: 58px; }
+/* Step 3 */
+.howto-score { position: relative; display: flex; flex-direction: column; align-items: center; }
+.howto-score::before {
+  content: ""; position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
+  width: 14px; height: 90px; background: #fff; border-radius: 8px; box-shadow: 0 6px 12px rgba(40,60,50,.14);
+}
+.howto-plus {
+  position: relative; z-index: 1; background: var(--red); color: #fff; font-weight: 800;
+  font-size: 15px; padding: 6px 16px; border-radius: 20px; box-shadow: 0 6px 12px rgba(150,40,30,.3);
+}
+.howto-perfect {
+  position: relative; z-index: 1; margin-top: 14px; background: var(--green-deep); color: #fff;
+  font-weight: 800; font-size: 16px; letter-spacing: .5px; padding: 8px 20px; border-radius: 22px;
+  box-shadow: 0 8px 16px rgba(11,94,70,.32);
+}
+.howto-star {
+  position: relative; z-index: 1; margin-top: -12px; width: 30px; height: 30px; border-radius: 50%;
+  background: var(--yellow); display: grid; place-items: center; font-size: 15px;
+  box-shadow: 0 4px 10px rgba(200,175,20,.35);
+}
+.howto-start { margin-top: 44px; }
+.howto-note { letter-spacing: 2px; font-weight: 800; color: var(--muted); font-size: 12px; margin-top: 16px; }
 
 /* ---------- HUD ---------- */
 .hud { display: flex; align-items: center; justify-content: center; gap: 46px; padding: 20px 20px 6px; }
@@ -149,14 +369,47 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .hud-score { text-align: center; }
 .hud-score-label { display: block; font-size: 12px; font-weight: 800; color: var(--muted); }
 .hud-score-val { font-weight: 900; color: var(--green-dark); font-size: 18px; }
+.hud-boosts { display: flex; align-items: center; gap: 8px; }
+.hud-boost-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--mint); color: var(--green-dark); font-weight: 800; font-size: 12px;
+  border-radius: 999px; padding: 6px 12px; white-space: nowrap;
+}
+
+/* ---------- Inventory row (in-game, sits right above Hint/Check Answers) ---------- */
+.inv-bar { display: flex; justify-content: center; align-items: center; gap: 10px; padding: 6px 20px 0; flex-wrap: wrap; }
+.inv-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #fff; border: 2px solid #cfe6da; color: var(--green-dark);
+  font-weight: 800; font-size: 13px; border-radius: 999px; padding: 8px 14px;
+  cursor: pointer; box-shadow: 0 2px 0 #cfe6da; transition: transform .1s ease;
+}
+.inv-chip:hover:not(:disabled) { transform: translateY(-2px); }
+.inv-chip:active:not(:disabled) { transform: translateY(0); }
+.inv-chip:disabled { opacity: .55; cursor: not-allowed; }
+.inv-chip-ico { font-size: 15px; }
+.inv-chip-qty { background: var(--mint); border-radius: 999px; padding: 1px 8px; font-size: 12px; }
 
 /* ---------- Board ---------- */
 .board { display: grid; grid-template-columns: 1.35fr 0.65fr; gap: 22px; padding: 16px 24px 10px; align-items: start; }
+/* Level 9 ("fix the mistakes"): no side tray, so the fridge just gets the
+   full board width, centered like the table/queue-style boards. */
+.board--fix { grid-template-columns: 1fr; justify-items: center; }
+.board--fix .fridge-scene { max-width: 520px; }
+.board--queue { display: flex; flex-direction: column; gap: 22px; padding: 16px 24px 10px; }
 
 /* ---------- Fridge (real illustration + drop zones) ---------- */
 .fridge-scene { display: flex; justify-content: center; }
-.fridge-img-wrap { position: relative; width: 100%; max-width: 660px; }
-.fridge-photo { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; filter: drop-shadow(0 12px 22px rgba(40,60,50,.18)); }
+/* Wrap hugs the photo so the %-positioned drop zones stay aligned; the photo is
+   capped by viewport height so the whole fridge (incl. the bottom freezer) is
+   always on screen without scrolling. */
+.fridge-img-wrap { position: relative; width: fit-content; max-width: 100%; margin: 0 auto; }
+.fridge-photo {
+  display: block; width: auto; height: auto;
+  max-width: 100%; max-height: calc(100vh - 220px);
+  user-select: none; -webkit-user-drag: none;
+  filter: drop-shadow(0 12px 22px rgba(40,60,50,.18));
+}
 
 .zone {
   position: absolute;
@@ -177,6 +430,33 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .zone--active .zone-tag { opacity: 1; }
 .zone-items { display: flex; flex-wrap: wrap; gap: 1.5%; align-items: flex-end; justify-content: center; width: 100%; }
 
+/* Shelf padlocked until the shelf above it is sorted correctly */
+.zone--locked { background: rgba(96, 104, 108, 0.45); border-radius: 10px; cursor: not-allowed; }
+.zone--locked .zone-tag { opacity: 1; }
+.zone-lock { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+.zone-lock-icon {
+  width: 22px; height: 22px; display: grid; place-items: center;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.35));
+}
+
+/* Shelf that opens the close-up FEFO view (Level 6 — "fridge-zoom" layout) */
+.zone--zoom { cursor: pointer; background: rgba(87, 196, 166, .16); border-color: transparent; }
+.zone--zoom:hover { background: rgba(87, 196, 166, .26); }
+.zone-zoom {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; width: 100%; height: 100%; text-align: center;
+}
+.zone-zoom-icon {
+  font-size: 22px; width: 40px; height: 40px; border-radius: 50%;
+  background: #fff; display: grid; place-items: center;
+  box-shadow: 0 4px 10px rgba(40,60,50,.18);
+}
+.zone-zoom-label {
+  font-size: 11px; font-weight: 800; color: var(--green-dark);
+  background: #fff; padding: 2px 9px; border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(40,60,50,.12);
+}
+
 /* Grey shade over locked compartments */
 .lock-overlay {
   position: absolute;
@@ -192,6 +472,132 @@ button { font-family: inherit; cursor: pointer; border: none; }
   filter: drop-shadow(0 2px 3px rgba(0,0,0,.35));
   pointer-events: none;
 }
+
+/* ---------- Queue scene (Level 6 — FEFO ordering) ---------- */
+.queue-scene {
+  background: linear-gradient(180deg, #eef6f1, #e2f0e7); border-radius: 24px;
+  padding: 26px 22px 22px; box-shadow: var(--shadow);
+}
+.queue-arrows { display: flex; justify-content: space-between; margin-bottom: 10px; padding: 0 4px; }
+.queue-arrow-label { font-size: 12px; font-weight: 800; color: var(--green-dark); letter-spacing: .2px; }
+.queue-shelf {
+  position: relative; display: flex; gap: 14px; align-items: stretch;
+  padding: 14px 14px 20px;
+}
+.queue-shelf-plank {
+  position: absolute; left: 6px; right: 6px; bottom: 8px; height: 14px;
+  background: linear-gradient(180deg, #cdb489, #b79866); border-radius: 6px;
+  box-shadow: 0 6px 10px rgba(40,60,50,.18);
+}
+.queue-slot {
+  position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end; gap: 8px;
+  background: rgba(255,255,255,.55); border: 2px dashed #b9d6c4; border-radius: 16px;
+  padding: 14px 8px 10px; min-height: 150px; transition: background .15s ease, border-color .15s ease;
+}
+.queue-slot--active { background: rgba(244,222,59,.28); border-color: var(--yellow-dark); cursor: pointer; }
+.queue-slot--filled { background: #fff; border-style: solid; border-color: var(--mint-line); }
+.queue-slot--hint { animation: hintGlow 0.6s ease-in-out 3; border-color: #f4de3b !important; }
+.queue-slot-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  width: 26px; height: 26px; border-radius: 50%; background: var(--green-dark); color: #fff;
+  font-size: 13px; font-weight: 900; display: grid; place-items: center;
+  box-shadow: 0 3px 8px rgba(13,115,85,.35);
+}
+.queue-slot-empty { color: #9fb0a8; font-weight: 700; font-size: 12px; padding: 18px 0; }
+.queue-slot-name { font-size: 11px; font-weight: 800; color: var(--muted); text-align: center; line-height: 1.2; }
+
+/* ---------- Zoom shelf (Level 6 — close-up of the one unlocked shelf) ---------- */
+.zoom-shelf-scene { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.zoom-shelf-toolbar { align-self: stretch; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.zoom-back-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: #fff; color: var(--green-dark); font-weight: 800; font-size: 13px;
+  border-radius: 999px; padding: 8px 16px; box-shadow: var(--shadow);
+  transition: transform .08s ease, box-shadow .15s ease;
+}
+.zoom-back-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(40,60,50,.18); }
+/* "Clear Cards" — pulls every card on this shelf back to the tray so the
+   player can pick them up and re-order them without hunting for each one
+   individually. Only shown once something's actually placed. */
+.zoom-clear-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: #fff2ec; color: #c9552e; font-weight: 800; font-size: 13px;
+  border-radius: 999px; padding: 8px 16px; box-shadow: var(--shadow);
+  border: 1px solid rgba(201,85,46,.25);
+  transition: transform .08s ease, box-shadow .15s ease;
+}
+.zoom-clear-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(40,60,50,.18); }
+.zoom-shelf-img-wrap { position: relative; width: fit-content; max-width: 100%; margin: 0 auto; }
+.zoom-shelf-photo {
+  display: block; width: auto; height: auto;
+  max-width: 100%; max-height: calc(100vh - 260px);
+  user-select: none; -webkit-user-drag: none;
+  filter: drop-shadow(0 12px 22px rgba(40,60,50,.18));
+}
+/* The compartment below the usable shelf isn't part of this level, so it's
+   closed off in black with a padlock — the same visual language <Fridge>
+   uses for compartments a level doesn't need. */
+.zoom-lower-lock {
+  position: absolute; left: 10%; right: 10%; top: 55%; bottom: 6%;
+  background: rgba(96, 104, 108, 0.5); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.zoom-lower-lock-icon { width: 34px; height: 34px; opacity: .95; }
+/* A single invisible click/drop target spanning the whole shelf — a new
+   item always joins the back of the line no matter where it's dropped, so
+   there's no need for separate per-slot targets any more. */
+.zoom-hitzone {
+  position: absolute; left: 9%; right: 8%; bottom: 42%; top: 7%;
+  border-radius: 14px; cursor: default;
+  transition: background .15s ease, box-shadow .15s ease;
+}
+.zoom-hitzone--active { cursor: pointer; background: rgba(244,222,59,.16); }
+.zoom-hitzone--active:hover { background: rgba(244,222,59,.3); }
+.zoom-hitzone--hint { animation: hintGlow 0.6s ease-in-out 3; box-shadow: inset 0 0 0 3px #f4de3b; }
+
+.zoom-cards {
+  position: absolute; left: 9%; right: 8%; bottom: 42%; top: 7%;
+  display: flex; flex-direction: column-reverse; align-items: stretch;
+  justify-content: flex-start; gap: 4px;
+  pointer-events: none;
+}
+/* Up to three cards per row. column-reverse means the first row in the
+   markup (the front row, slots 1–3) ends up lowest — closest to camera —
+   with any overflow row drawn above it, smaller, as if leaning further
+   back on the shelf. */
+.zoom-row {
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.zoom-row--back { margin-bottom: -20px; opacity: .92; }
+/* Cards sit side by side with a little breathing room — no overlap. */
+.zoom-card {
+  position: relative; flex: 1; min-width: 0; max-width: 90px; /* จาก 130px */
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end; padding-bottom: 6px;
+  transition: transform .15s ease;
+}
+.zoom-row { gap: 6px; }
+.zoom-card .chip { pointer-events: auto; }
+.zoom-card .chip--wrong,
+.zoom-card .chip--correct { transform: translateY(-2px); }
+/* Cards inside the zoomed shelf must never overflow their own slot — on a
+   narrow phone the 5 slots get squeezed, so the card scales down with its
+   container (instead of staying a fixed 56px) rather than spilling into the
+   next slot and hiding it. */
+.zoom-card .chip--small { width: 100%; max-width: 70px; padding: 2px 2px 1px; } 
+.zoom-card .chip--small .chip-tile { width: 100%; }
+
+.zoom-card .chip--small .chip-expiry { font-size: 10px; padding: 1px 3px; white-space: nowrap; }
+/* The pop-up name pill: floats above the card itself so it's always fully
+   readable, even when neighbouring cards sit close together underneath it. */
+.chip-label--top {
+  position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+  background: #fff; color: #2c3a33; font-size: 8px; font-weight: 800;
+  white-space: nowrap; padding: 2px 6px; border-radius: 999px;
+  box-shadow: 0 3px 8px rgba(40,60,50,.2); pointer-events: none; z-index: 4;
+}
+.chip--label-top { overflow: visible; }
 
 /* ---------- Item chips ---------- */
 .chip {
@@ -211,12 +617,24 @@ button { font-family: inherit; cursor: pointer; border: none; }
 }
 .chip-img { width: 82%; height: 82%; object-fit: contain; -webkit-user-drag: none; }
 .chip-label { font-size: 12px; text-align: center; line-height: 1.1; color: #3a4650; }
+.chip-expiry {
+  font-size: 10px; font-weight: 800; color: #a15b1a; background: #fdecd3;
+  border-radius: 8px; padding: 2px 7px; text-align: center; white-space: nowrap;
+}
+.chip--small .chip-expiry { font-size: 9px; padding: 1px 5px; }
 /* Cards placed inside the fridge zones — 3 per shelf, with labels, sized as a
    % of the (wide) shelf so they scale with the fridge. Tiles are slightly wider
    than tall so the whole card fits between two shelves without overlapping. */
-.chip--small { width: 32%; min-width: 0; padding: 5px 4px 4px; gap: 3px; border-radius: 12px; box-shadow: 0 3px 7px rgba(40,60,50,.2); }
+/* Fixed pixel size (not a % of the shelf) so every placed card is the same size
+   across all levels, no matter which compartment it lands in. Kept a touch
+   smaller than a shelf gap so cards rest on the shelf instead of filling it. */
+.chip--small { width: 56px; min-width: 0; flex: 0 0 auto; padding: 4px 3px 3px; gap: 2px; border-radius: 11px; box-shadow: 0 3px 7px rgba(40,60,50,.2); }
+.chip--small .chip-tile { border-radius: 8px; }
+.chip--small .chip-label { min-height: 2.1em; font-size: 10px; }
 .chip--small .chip-tile { aspect-ratio: 5 / 4; border-radius: 9px; }
-.chip--small .chip-label { display: block; font-size: 11px; font-weight: 800; line-height: 1.05; color: #3a4650; }
+/* Reserve 2 label lines so every card is the same height — otherwise a card
+   whose name wraps (e.g. "Raw Chicken") ends up taller and floats above its row. */
+.chip--small .chip-label { display: flex; align-items: center; justify-content: center; min-height: 2.2em; font-size: 11px; font-weight: 800; line-height: 1.05; color: #3a4650; }
 .chip--small .chip-mark { width: 18px; height: 18px; font-size: 11px; top: -6px; right: -6px; }
 .chip--selected { outline: 3px solid var(--yellow-dark); transform: translateY(-3px) scale(1.03); }
 .chip--correct { box-shadow: 0 0 0 3px #7ed3a3, 0 4px 10px rgba(40,60,50,.14); }
@@ -231,8 +649,174 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .tray-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; justify-items: center; }
 .tray-empty { grid-column: 1 / -1; text-align: center; color: #9a8400; font-weight: 800; padding: 60px 0; }
 
+/* ---------- Level 4: Cutting Boards (เขียง) — prep-station tray ---------- */
+.cb-panel {
+  position: relative; overflow: hidden;
+  background:
+    repeating-linear-gradient(90deg, rgba(0,0,0,.025) 0 2px, transparent 2px 26px),
+    linear-gradient(180deg, #e8d9b0, #dcc794);
+  border-radius: 24px; padding: 18px 16px 22px; min-height: 380px;
+  box-shadow: var(--shadow), inset 0 0 0 6px rgba(255,255,255,.18);
+}
+.cb-panel-title {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 900; color: #6b4a1f; margin: 4px 0 12px; font-size: 13px; letter-spacing: .2px;
+}
+.cb-step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%; background: #fff; color: #6b4a1f;
+  font-size: 12px; flex-shrink: 0; box-shadow: 0 2px 0 rgba(0,0,0,.12);
+}
+.cb-tray-items {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; justify-items: center;
+  margin-bottom: 20px; padding: 12px 10px; border-radius: 18px;
+  background: rgba(255,255,255,.35); box-shadow: inset 0 2px 6px rgba(0,0,0,.08);
+}
+.cb-tray-boards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.cb-empty { grid-column: 1 / -1; text-align: center; color: #6b4a1f; font-weight: 800; padding: 16px 0; }
+
+/* A cutting board — a glossy colour tile with a wood-grain rim + handle notch */
+.cb-board {
+  position: relative; background: var(--board-color); border: 1px solid rgba(0,0,0,.1);
+  border-radius: 16px; cursor: grab; aspect-ratio: 1 / 1; padding: 8px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow:
+    0 6px 0 rgba(0,0,0,.16),
+    inset 0 4px 10px rgba(255,255,255,.5),
+    inset 0 -10px 14px rgba(0,0,0,.14);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.cb-board::before {
+  content: ''; position: absolute; inset: 5px; border-radius: 11px;
+  border: 2px solid rgba(255,255,255,.35); pointer-events: none;
+}
+.cb-board:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 9px 0 rgba(0,0,0,.16), inset 0 4px 10px rgba(255,255,255,.5), inset 0 -10px 14px rgba(0,0,0,.14); }
+.cb-board:active { cursor: grabbing; }
+.cb-board-face { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.cb-board-handle {
+  display: block; position: absolute; top: -7px; left: 50%; transform: translateX(-50%);
+  width: 30%; height: 10px; border-radius: 6px 6px 0 0; background: var(--board-color);
+  box-shadow: inset 0 2px 3px rgba(255,255,255,.4);
+}
+.cb-board-items { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; justify-content: center; }
+/* Icon-only chips that sit ON a cutting board (no label so they fit the slot) */
+.chip--icon { width: 40px; padding: 3px; gap: 0; border-radius: 8px; }
+.chip--icon .chip-tile { aspect-ratio: 1 / 1; border-radius: 6px; }
+
+/* A fridge slot that receives a loaded board */
+.cb-slot {
+  position: absolute; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  transition: background .15s ease, border-color .15s ease;
+}
+.cb-slot:not(.cb-slot--filled) { border: 2px dashed rgba(150,130,10,.45); background: rgba(244,222,59,.14); }
+/* A board dropped in the fridge fills the whole slot like a shelf liner.
+   Several boards can share one slot — they split the width evenly. */
+.cb-slot--filled { padding: 4px; gap: 4px; }
+.cb-slot--filled .cb-board {
+  flex: 1 1 0; min-width: 0; height: 100%; aspect-ratio: auto; border-radius: 10px; padding: 3px 4px;
+  box-shadow: inset 0 3px 6px rgba(255,255,255,.35), inset 0 -6px 10px rgba(0,0,0,.15), 0 2px 5px rgba(0,0,0,.18);
+}
+.cb-slot--filled .cb-board-handle { display: none; }
+.cb-slot-hint { font-size: 9px; font-weight: 800; color: #9a8400; opacity: .75; }
+
+/* ---------- Level 1: Fridge Assembly ---------- */
+.board--assembly { grid-template-columns: 1.35fr 0.65fr; }
+.assembly-scene { display: contents; }
+/* Parts snap onto the real fridge photo (reusing .fridge-img-wrap / .fridge-photo) */
+.assembly-fridge { display: flex; justify-content: center; }
+
+.afr-slot {
+  position: absolute; border: 2.5px dashed #9fb0b8; border-radius: 12px;
+  background: rgba(255,255,255,.28); display: grid; place-items: center;
+  transition: border-color .12s ease, background .12s ease; cursor: pointer;
+  overflow: hidden;
+}
+.afr-slot--active { border-color: var(--teal); background: rgba(87,196,166,.14); }
+.afr-slot--correct { border-style: solid; border-color: #7ed3a3; }
+.afr-slot--wrong { border-style: solid; border-color: #f28d72; }
+.afr-slot-label { font-size: 11px; font-weight: 800; color: #aab3b9; text-align: center; pointer-events: none; }
+
+.afr-part { position: relative; width: 100%; height: 100%; background: none; padding: 6%; display: grid; place-items: center; cursor: grab; }
+.afr-part:active { cursor: grabbing; }
+.afr-part img { width: 100%; height: 100%; object-fit: contain; -webkit-user-drag: none; filter: drop-shadow(0 3px 5px rgba(40,60,50,.15)); }
+.afr-part-temp {
+  position: absolute; bottom: 3px; right: 5px; font-size: 10px; font-weight: 800;
+  color: #5b666e; background: #ffffffcc; padding: 1px 6px; border-radius: 10px;
+}
+.afr-mark { position: absolute; top: -8px; right: -8px; width: 22px; height: 22px; border-radius: 50%; color: #fff; font-size: 13px; display: grid; place-items: center; font-weight: 900; box-shadow: 0 2px 5px rgba(0,0,0,.2); }
+.afr-mark--ok { background: #35b46e; }
+.afr-mark--no { background: #ef6b4a; }
+
+/* Tray of parts + temperature key */
+.assembly-tray { background: linear-gradient(180deg, #fbf1b8, #f8eca4); border-radius: 24px; padding: 20px; min-height: 380px; box-shadow: var(--shadow); display: flex; flex-direction: column; }
+.parts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.part-chip {
+  background: #fff; border-radius: 16px; padding: 10px 8px; display: flex; flex-direction: column;
+  align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(40,60,50,.14); transition: transform .12s ease, box-shadow .12s ease;
+}
+.part-chip:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(40,60,50,.2); }
+.part-chip:active { cursor: grabbing; }
+.part-chip--selected { outline: 3px solid var(--yellow-dark); transform: translateY(-3px) scale(1.03); }
+.part-chip-art { width: 100%; height: 42px; background: #f3f6f7; border-radius: 10px; display: grid; place-items: center; overflow: hidden; }
+.part-chip-art img { width: 88%; height: 70%; object-fit: contain; -webkit-user-drag: none; }
+.part-chip-label { font-size: 12px; font-weight: 800; color: #3a4650; text-align: center; line-height: 1.1; }
+
+.thermo-key { margin-top: auto; padding-top: 18px; display: flex; flex-wrap: wrap; gap: 10px 14px; justify-content: center; }
+.thermo-key-item { display: grid; place-items: center; }
+.thermo { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; }
+.thermo--small { flex-direction: row; gap: 5px; }
+.thermo--lg { gap: 6px; }
+.thermo--lg .thermo-temp { font-size: 13px; }
+.thermo-temp { font-size: 11px; font-weight: 800; color: #5b666e; }
+
+/* Thermo-type parts (Level 8): the tray chip and the placed-in-slot chip are
+   just the glyph itself — no shelf/drawer photo, no name label underneath. */
+.part-chip--thermo { display: grid; place-items: center; padding: 14px 6px; }
+.afr-part--thermo { display: grid; place-items: center; padding: 0; }
+
+/* ---------- Table scene (Level 7: table + trash instead of tray) ---------- */
+.table-scene { display: flex; flex-direction: column; gap: 18px; }
+.table-title { font-weight: 900; color: #9a5a45; font-size: 15px; }
+
+.table-top {
+  position: relative;
+  background: linear-gradient(180deg, #f6d8cf 0%, #eebfb0 100%);
+  border: 3px solid #e3a998;
+  border-radius: 18px;
+  padding: 22px 16px 30px;
+  min-height: 260px;
+  box-shadow: var(--shadow);
+}
+.table-items {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  justify-content: center; align-items: flex-end;
+}
+.table-empty { width: 100%; text-align: center; color: #9a5a45; font-weight: 800; padding: 50px 0; }
+
+.table-leg {
+  position: absolute; bottom: -22px; width: 14px; height: 26px;
+  background: #e3a998; border-radius: 0 0 6px 6px;
+  box-shadow: var(--shadow);
+}
+.table-leg--l { left: 16%; }
+.table-leg--r { right: 16%; }
+
+.trash-zone {
+  margin-top: 12px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  border-radius: 16px;
+  padding: 16px;
+  color: #6b7680;
+  font-weight: 800;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.trash-zone--over { background: rgba(192, 57, 43, .1); color: var(--red); }
+.trash-img { width: 300px; height: 200px; object-fit: contain; -webkit-user-drag: none; }
+.trash-label { font-size: 14px; }
+
+
 /* ---------- Actions ---------- */
-.actions { display: flex; justify-content: center; padding: 10px 20px 44px; }
+.actions { display: flex; justify-content: center; align-items: center; gap: 14px; padding: 10px 20px 44px; flex-wrap: wrap; }
 
 /* ---------- Modal ---------- */
 .modal-backdrop { position: fixed; inset: 0; background: rgba(30, 45, 40, .5); backdrop-filter: blur(3px); display: grid; place-items: center; z-index: 40; padding: 20px; }
@@ -261,8 +845,156 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .stat-val--red { color: var(--red); }
 .end-primary { padding: 16px 20px; }
 
+/* ----- Wrong-zone feedback card ----- */
+.fb-card {
+  background: #fff; border-radius: 30px; padding: 30px 30px 26px; text-align: center;
+  box-shadow: var(--shadow-lg); width: 440px; max-width: 92vw;
+  display: flex; flex-direction: column; align-items: stretch;
+  /* Card itself never grows past the viewport — the content inside scrolls
+     instead, while the Next/Got it button below stays put and always shows. */
+  max-height: 88vh;
+  overflow: hidden;
+}
+/* Everything except the bottom button lives in here so long mistake lists
+   scroll on their own, without ever pushing the button off-screen. */
+.fb-scroll {
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: 8px;
+  /* small inset so the scrollbar doesn't sit flush against rounded content */
+  padding-right: 2px; margin-right: -2px;
+}
+.fb-next { flex: none; margin-top: 14px; }
+.fb-icon-row { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 2px; }
+.fb-sparkle { font-size: 18px; opacity: .8; }
+.fb-icon {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: #4EA8DE; color: #fff; font-size: 26px;
+  display: grid; place-items: center; box-shadow: 0 8px 18px rgba(78,168,222,.38);
+}
+.fb-title { color: #1F3A5F; font-size: 26px; font-weight: 900; margin: 0; }
+.fb-sub { color: var(--muted); font-weight: 600; font-size: 14px; margin: 0 0 8px; }
+.fb-theme {
+  display: flex; align-items: center; gap: 16px; text-align: left;
+  background: #f8f4e6; border-radius: 16px; padding: 12px; margin-bottom: 6px;
+}
+.fb-theme-img {
+  width: 92px; height: 78px; flex: none; border-radius: 12px; overflow: hidden;
+  background: #fbf3d6; display: grid; place-items: center; font-size: 34px;
+}
+.fb-theme-img img { width: 100%; height: 100%; object-fit: contain; }
+.fb-theme-title { color: var(--green-dark); font-size: 22px; font-weight: 900; }
+.fb-theme-sub { color: var(--ink); font-weight: 500; font-size: 14px; margin-top: 2px; }
+.fb-theme-bulb { margin-left: auto; font-size: 22px; flex: none; }
+.fb-list-head--plain {
+  text-align: left; color: #1F3A5F; font-weight: 800; font-size: 14px;
+  background: transparent; border-radius: 0; padding: 4px 2px; margin-bottom: 0;
+  display: flex; align-items: center; gap: 8px;
+}
+.fb-list-ico {
+  width: 22px; height: 22px; flex: none; border-radius: 6px; background: #DCEBFF;
+  display: grid; place-items: center; font-size: 12px;
+}
+.fb-list--plain {
+  display: flex; flex-direction: column; gap: 10px;
+  background: transparent; border-radius: 0; padding: 0; margin-bottom: 4px;
+}
+.fb-row {
+  display: flex; align-items: center; gap: 12px;
+  background: #fff; border: 1px solid #eef1ef; border-radius: 14px; padding: 10px 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+}
+.fb-row-ico {
+  width: 44px; height: 44px; flex: none; border-radius: 10px; overflow: hidden;
+  display: grid; place-items: center; background: #f4f0e4; font-size: 22px;
+}
+.fb-row-ico img { width: 100%; height: 100%; object-fit: contain; }
+.fb-row-main { flex: 1; text-align: left; min-width: 0; }
+.fb-row-name { color: var(--ink); font-weight: 800; font-size: 14px; }
+.fb-row-desc { color: var(--muted); font-weight: 500; font-size: 12px; margin-top: 2px; line-height: 1.35; }
+.fb-row-badge {
+  flex: none; background: #FEF0D0; color: #B9862E; font-size: 11px; font-weight: 800;
+  border-radius: 999px; padding: 4px 10px; white-space: nowrap;
+}
+.fb-row-chevron { color: #9db3d6; font-weight: 900; font-size: 18px; flex: none; }
+.fb-tip {
+  display: flex; align-items: flex-start; gap: 10px; text-align: left;
+  background: #EAF2FF; border-radius: 16px; padding: 14px 16px; margin: 2px 0 8px;
+}
+.fb-tip-star { font-size: 15px; flex: none; margin-top: 1px; }
+.fb-tip-text { flex: 1; font-size: 13px; color: #33475b; line-height: 1.4; }
+.fb-tip-text strong { color: #1F3A5F; }
+.fb-tip-fridge { font-size: 20px; flex: none; opacity: .85; }
+
+/* ----- Wrong-zone feedback card: "didn't pass" (red) variant ----- */
+.fb-icon--danger { background: #E74C3C; box-shadow: 0 8px 18px rgba(231,76,60,.38); }
+.fb-title--danger { color: #E74C3C; }
+.fb-danger-box {
+  background: #FDECEA; border-radius: 16px; padding: 14px; text-align: left; margin-bottom: 4px;
+}
+.fb-danger-head { color: #E74C3C; font-weight: 800; font-size: 14px; margin-bottom: 10px; }
+.fb-danger-list { display: flex; flex-direction: column; gap: 10px; }
+.fb-danger-row {
+  display: flex; align-items: center; gap: 12px;
+  background: #fff; border-radius: 14px; padding: 10px 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+}
+.fb-danger-row-x {
+  width: 22px; height: 22px; flex: none; border-radius: 50%;
+  background: #E74C3C; color: #fff; font-size: 12px; font-weight: 900;
+  display: grid; place-items: center;
+}
+
+/* ----- Level Completed! (win variant) ----- */
+.end-card--win { gap: 8px; padding-top: 30px; }
+.end-title--win { font-size: 32px; }
+.end-sub--caps { letter-spacing: 2px; margin: 0 0 2px; }
+.stars--win { margin: 6px 0 10px; }
+.win-scorelabel { color: var(--muted); font-weight: 700; font-size: 14px; margin-top: 2px; }
+.win-score { color: var(--green-deep); font-weight: 900; font-size: 60px; line-height: 1; margin-bottom: 4px; }
+.win-streak {
+  align-self: center; background: #fdeede; color: var(--orange);
+  font-weight: 800; font-size: 15px; padding: 8px 18px; border-radius: 999px; margin: 2px 0 4px;
+}
+.win-coins {
+  align-self: center; display: flex; align-items: center; gap: 12px;
+  background: #f4f0e4; border-radius: 18px; padding: 12px 22px; margin: 4px 0 8px;
+}
+.win-coins-ico {
+  width: 44px; height: 44px; border-radius: 50%; flex: none;
+  background: radial-gradient(circle at 50% 40%, #ffe9a3 0%, #f4c948 100%);
+  box-shadow: inset 0 0 0 3px #f0bd2e;
+  display: grid; place-items: center; font-size: 22px;
+  color: #fff8dd; text-shadow: 0 1px 1px rgba(180,140,10,.4);
+}
+.win-coins-body { text-align: left; }
+.win-coins-label { color: var(--muted); font-weight: 700; font-size: 13px; }
+.win-coins-val { color: var(--green-dark); font-weight: 900; font-size: 24px; line-height: 1.1; }
+
 /* Pause specifics */
 .pause-card { gap: 12px; }
+.resume-choice-row { display: flex; gap: 12px; margin-top: 4px; }
+.resume-choice-row .btn {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 16px 12px; font-size: 17px; white-space: nowrap;
+}
+.resume-choice-row .btn-play { box-shadow: 0 5px 0 var(--yellow-shadow); }
+.resume-card { position: relative; padding-top: 40px; }
+.resume-close {
+  position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 50%;
+  background: #f1f3f2; color: #55606a; font-weight: 900; font-size: 14px;
+  display: grid; place-items: center; line-height: 1; transition: background .15s ease;
+}
+.resume-close:hover { background: #e5e8e8; }
+.resume-illustration { position: relative; width: 130px; height: 130px; margin: 0 auto 6px; display: grid; place-items: center; }
+.resume-fridge-img {
+  width: 100%; height: 100%; object-fit: contain; border-radius: 24px;
+  background: var(--mint); box-shadow: inset 0 0 0 4px #cdeadd, 0 8px 16px rgba(0,0,0,.12); padding: 10px;
+}
+.resume-check-badge {
+  position: absolute; right: -6px; bottom: -6px; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--green-dark); color: #fff; font-size: 18px; font-weight: 900;
+  display: grid; place-items: center; border: 3px solid #fff; box-shadow: 0 3px 6px rgba(0,0,0,.25);
+}
 .pause-stats { display: flex; align-items: center; justify-content: center; gap: 30px; margin-top: 8px; padding-top: 16px; border-top: 1px solid #eceef0; }
 .pause-divider { width: 1px; height: 34px; background: #e2e5e7; }
 .pause-stat-val { color: var(--green-dark); font-weight: 900; font-size: 20px; }
@@ -311,6 +1043,8 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .mystery-bar { height: 10px; background: #ffffff88; border-radius: 6px; overflow: hidden; }
 .mystery-fill { height: 100%; background: var(--green-dark); border-radius: 6px; }
 .mystery-meta { display: flex; justify-content: space-between; margin-top: 8px; font-weight: 800; color: var(--green-deep); font-size: 14px; }
+.mystery-reward { display: flex; align-items: center; gap: 10px; background: #ffffffaa; border-radius: 14px; padding: 10px 14px; font-weight: 800; color: var(--green-deep); font-size: 15px; }
+.mystery-reward-ico { font-size: 22px; }
 
 .rewards-row-head { display: flex; align-items: center; justify-content: space-between; margin: 28px 0 14px; }
 .rewards-row-head h2 { margin: 0; font-size: 26px; color: var(--ink); }
@@ -345,18 +1079,29 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .levelsel-sub { color: var(--muted); font-weight: 700; margin: 6px 0 34px; }
 .levelsel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 20px; justify-items: center; }
 .lvl-node { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-.lvl-play-badge { position: absolute; top: -22px; background: #6b7680; color: #fff; font-size: 11px; font-weight: 800; padding: 3px 12px; border-radius: 20px; letter-spacing: .5px; }
+.lvl-play-badge {
+  position: absolute; top: -22px; z-index: 3; background: #6b7680; color: #fff; font-size: 11px;
+  font-weight: 800; padding: 3px 12px; border-radius: 20px; letter-spacing: .5px;
+  opacity: 0; transform: translateY(6px) scale(.9); pointer-events: none;
+  transition: opacity .2s ease, transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.lvl-node:hover .lvl-play-badge { opacity: 1; transform: translateY(-10px) scale(1); }
 .lvl-circle {
   width: 96px; height: 96px; border-radius: 50%; font-size: 34px; font-weight: 900;
   display: grid; place-items: center; box-shadow: 0 6px 14px rgba(40,60,50,.18);
-  transition: transform .1s ease;
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease;
 }
-.lvl-circle:hover { transform: translateY(-3px); }
-.lvl-circle--current { box-shadow: 0 0 0 5px #fff, 0 0 0 9px var(--teal), 0 8px 18px rgba(40,60,50,.25); }
+.lvl-circle:not(.lvl-circle--locked):hover {
+  transform: translateY(-8px) scale(1.12);
+  box-shadow: 0 0 0 5px #fff, 0 0 0 10px var(--teal), 0 14px 26px rgba(40,60,50,.28);
+}
+.lvl-circle--current { box-shadow: 0 6px 14px rgba(40,60,50,.18); }
 .lvl-circle--locked { background: #e3e5e2; color: #b7bdb9; font-size: 30px; box-shadow: none; }
 .lvl-stars { font-size: 16px; letter-spacing: 2px; height: 16px; line-height: 1; }
 .lvl-star { color: #e2e5df; }
 .lvl-star.on { color: var(--yellow); }
+.lvl-star-count { font-size: 13px; font-weight: 800; letter-spacing: .5px; color: #b0b6b1; }
+.lvl-star-count.on { color: var(--yellow); }
 .lvl-name { font-weight: 800; color: var(--ink); font-size: 15px; }
 .lvl-name--current { color: var(--green-dark); }
 .lvl-name--muted { color: #b0b6b1; }
@@ -371,7 +1116,181 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .locked-progress-val { color: var(--green-dark); }
 .locked-bar { height: 12px; background: #e6e8e6; border-radius: 8px; overflow: hidden; margin-bottom: 24px; }
 .locked-fill { height: 100%; background: var(--green-dark); border-radius: 8px; }
+.locked-label { font-size: 14px; }
 .locked-got { width: 100%; padding: 15px; }
+
+/* ---------- Hint (4.7): button + glowing target highlight ---------- */
+.btn-hint {
+  background: #fff6d6;
+  border: 2px solid #f4de3b;
+  color: #7a6a10;
+  font-weight: 700;
+}
+@keyframes hintGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(244,222,59,.7); }
+  50% { box-shadow: 0 0 0 10px rgba(244,222,59,0); }
+}
+.zone--hint { animation: hintGlow 0.6s ease-in-out 3; border-color: #f4de3b !important; }
+.afr-slot--hint { animation: hintGlow 0.6s ease-in-out 3; outline: 3px solid #f4de3b; outline-offset: 2px; }
+
+/* ---------- Boost button (in-game, sits next to Hint) ---------- */
+.btn-boost {
+  background: #eaf6ff;
+  border: 2px solid #a9cdf5;
+  color: #2f5f9e;
+  font-weight: 700;
+}
+.btn-boost:hover { background: #dcefff; }
+
+/* ---------- Boost shop card (Modal popover during gameplay) ---------- */
+.boost-card { text-align: center; max-width: 380px; }
+.boost-card-close { float: right; background: none; border: none; font-size: 20px; color: var(--muted); cursor: pointer; line-height: 1; }
+.boost-card h2 { color: var(--green-dark); font-size: 24px; font-weight: 900; margin: 4px 0 4px; }
+.boost-card-wallet { display: inline-flex; align-items: center; gap: 6px; background: #fff6d6; border: 2px solid var(--yellow); border-radius: 999px; padding: 6px 16px; font-weight: 900; color: #9a8400; margin-bottom: 18px; }
+.boost-list { display: flex; flex-direction: column; gap: 10px; }
+.boost-row { display: flex; align-items: center; gap: 12px; background: var(--mint); border-radius: 16px; padding: 10px 14px; text-align: left; }
+.boost-row-ico { font-size: 24px; width: 40px; text-align: center; flex-shrink: 0; }
+.boost-row-main { flex: 1; min-width: 0; }
+.boost-row-name { color: var(--green-dark); font-weight: 800; font-size: 15px; }
+.boost-row-desc { color: var(--muted); font-size: 12px; font-weight: 600; line-height: 1.35; }
+.boost-row-buy {
+  flex-shrink: 0; background: #fff; border: 2px solid var(--teal); color: var(--green-dark);
+  font-weight: 800; font-size: 13px; padding: 8px 14px; border-radius: 12px; cursor: pointer;
+}
+.boost-row-buy:disabled { opacity: .5; cursor: not-allowed; border-color: #ccc; color: #999; }
+.boost-row--active .boost-row-buy { background: var(--teal); color: #fff; }
+
+/* ---------- Auth: inline error / notice text ---------- */
+.auth-error { color: var(--red, #e4573b); font-size: 13px; font-weight: 600; text-align: left; margin: 4px 0 0; }
+.auth-notice { color: var(--teal, #2f9e63); font-size: 13px; font-weight: 600; text-align: left; margin: 4px 0 0; }
+
+/* ---------- Shop: The Fresh Market ---------- */
+.shop-screen { flex: 1; padding: 34px 20px 50px; max-width: 980px; margin: 0 auto; width: 100%; text-align: center; }
+.shop-title { color: var(--green-dark); font-size: 44px; font-weight: 900; margin: 0; }
+.shop-sub { color: var(--muted); font-weight: 600; margin: 10px auto 30px; max-width: 620px; line-height: 1.5; }
+
+.shop-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+  align-items: stretch;
+}
+.shop-card {
+  position: relative; background: #fff; border-radius: 22px; padding: 22px 20px 24px;
+  box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center;
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease;
+}
+.shop-card:hover { transform: translateY(-12px) scale(1.04); box-shadow: var(--shadow-lg); }
+
+.shop-badge {
+  position: absolute; top: 14px; left: 14px; z-index: 2;
+  background: #f6c1b3; color: #9a3b28; font-weight: 800; font-size: 11px;
+  letter-spacing: .5px; padding: 5px 10px; border-radius: 8px;
+}
+
+/* Power-up icon: coloured circle + corner badge + sparkles */
+.shop-ico {
+  position: relative; width: 118px; height: 118px; border-radius: 50%;
+  display: grid; place-items: center; margin: 12px 0 14px;
+}
+.shop-ico-glyph { font-size: 54px; line-height: 1; filter: drop-shadow(0 4px 5px rgba(0,0,0,.2)); }
+.shop-ico--purple { background: radial-gradient(circle at 50% 38%, #efe0ff 0%, #cbb0f2 100%); }
+.shop-ico--gold   { background: radial-gradient(circle at 50% 38%, #fdf1cf 0%, #f6dd97 100%); }
+.shop-ico--blue   { background: radial-gradient(circle at 50% 38%, #dcefff 0%, #a9cdf5 100%); }
+/* The "2X" glyph is text, style it big & bold like the mockup */
+.shop-ico--blue .shop-ico-glyph {
+  font-size: 46px; font-weight: 900; font-style: italic;
+  color: #3a86e0; -webkit-text-stroke: 2px #fff; paint-order: stroke fill;
+}
+.shop-ico-badge {
+  position: absolute; right: -4px; bottom: 4px; z-index: 3;
+  min-width: 34px; height: 26px; padding: 0 8px; border-radius: 999px;
+  background: #fff; display: grid; place-items: center;
+  font-weight: 900; font-size: 13px; box-shadow: 0 3px 8px rgba(0,0,0,.18);
+}
+.shop-ico--purple .shop-ico-badge { color: #8b5cf0; }
+.shop-ico--gold   .shop-ico-badge { color: #e08a2a; }
+.shop-ico--blue   .shop-ico-badge { color: #3a86e0; }
+.shop-spark { position: absolute; color: #f4c948; font-size: 13px; opacity: .9; }
+.shop-ico--purple .shop-spark { color: #c4a3f0; }
+.shop-ico--blue .shop-spark { color: #8fb8ee; }
+.shop-spark--tl { top: 2px; left: -2px; }
+.shop-spark--tr { top: 14px; right: -6px; font-size: 16px; }
+.shop-spark--bl { bottom: 18px; left: -8px; font-size: 10px; }
+
+.shop-card-name { color: var(--green-dark); font-weight: 800; font-size: 21px; margin: 2px 0 8px; }
+.shop-card-desc { color: var(--muted); font-weight: 500; font-size: 14px; line-height: 1.45; margin: 0 0 14px; flex: 1; }
+.shop-coins {
+  display: inline-flex; align-items: center; gap: 7px;
+  color: var(--ink); font-weight: 800; font-size: 17px; margin-bottom: 14px;
+}
+/* Gold coin chip */
+.shop-coin-ico {
+  width: 22px; height: 22px; border-radius: 50%; flex: none;
+  background: radial-gradient(circle at 50% 35%, #ffe27a 0%, #f4c430 60%, #e0a91e 100%);
+  box-shadow: inset 0 0 0 2px #f0b622, 0 1px 2px rgba(150,110,10,.3);
+  display: grid; place-items: center;
+  color: #fff8dd; font-size: 13px; font-weight: 900; text-shadow: 0 1px 1px rgba(160,120,10,.5);
+}
+.shop-buy {
+  position: relative;
+  width: 100%; background: var(--teal); color: #fff; font-weight: 800; font-size: 18px;
+  border: none; border-radius: 999px; padding: 14px 0; cursor: pointer;
+  transition: filter .15s ease, transform .1s ease;
+}
+.shop-buy:hover { filter: brightness(1.05); }
+.shop-buy:active { transform: scale(.98); }
+/* No focus ring on mouse click; keep a subtle one for keyboard users */
+.shop-buy:focus { outline: none; }
+.shop-buy:focus-visible { outline: 3px solid var(--green-dark); outline-offset: 3px; }
+
+.shop-back { display: block; margin: 34px auto 0; }
+.shop-wallet {
+  display: inline-flex; align-items: center; gap: 6px; background: #fff6d6; border: 2px solid var(--yellow);
+  border-radius: 999px; padding: 8px 18px; font-weight: 900; color: #9a8400; margin-bottom: 26px;
+}
+.shop-buy:disabled { opacity: .5; cursor: not-allowed; filter: none; transform: none; }
+.shop-toast {
+  max-width: 420px; margin: 4px auto 0; background: var(--mint); color: var(--green-dark);
+  font-weight: 800; padding: 10px 18px; border-radius: 14px; box-shadow: inset 0 0 0 2px var(--mint-line);
+}
+
+/* Confirm-purchase modal */
+.shop-modal-overlay {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(30, 40, 35, .35);
+  display: grid; place-items: center; padding: 20px;
+}
+.shop-modal {
+  background: #fff; border-radius: 26px; padding: 26px 26px 26px;
+  width: 100%; max-width: 330px; text-align: center; position: relative;
+  box-shadow: var(--shadow-lg);
+}
+/* Icon sits INSIDE the card at the top (framed), not overflowing the edge */
+.shop-modal-ico { margin: 4px 0 2px; }
+.shop-modal-ico .shop-ico { width: 78px; height: 78px; margin: 0 auto; }
+.shop-modal-ico .shop-ico-glyph { font-size: 36px; }
+.shop-modal-ico .shop-ico--blue .shop-ico-glyph { font-size: 28px; }
+.shop-modal-ico .shop-ico-badge { min-width: 24px; height: 20px; font-size: 11px; padding: 0 7px; right: -6px; bottom: 0; }
+.shop-modal-title { color: var(--green-dark); font-weight: 900; font-size: 22px; margin: 6px 0 8px; }
+.shop-modal-text { color: var(--ink); font-weight: 500; font-size: 14px; margin: 0 0 20px; line-height: 1.45; }
+.shop-modal-cost {
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--mint); border-radius: 14px; padding: 14px 18px; margin-bottom: 18px;
+  color: var(--muted); font-weight: 700; font-size: 14px;
+}
+.shop-modal-price { color: var(--green-dark); font-weight: 900; font-size: 18px; display: inline-flex; align-items: center; gap: 6px; }
+.shop-modal-confirm {
+  width: 100%; background: var(--yellow); color: #7a6a00; font-weight: 800; font-size: 16px;
+  border: none; border-radius: 999px; padding: 14px 0; cursor: pointer; margin-bottom: 12px;
+  box-shadow: 0 4px 0 var(--yellow-shadow); transition: transform .1s ease;
+}
+.shop-modal-confirm:hover { transform: translateY(-2px); }
+.shop-modal-confirm:active { transform: translateY(0); }
+.shop-modal-cancel {
+  width: 100%; background: var(--mint); color: var(--green-dark); font-weight: 800; font-size: 15px;
+  border: none; box-shadow: inset 0 0 0 2px var(--mint-line); border-radius: 999px;
+  padding: 13px 0; cursor: pointer;
+}
+.shop-modal-cancel:hover { background: #d6eee1; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
@@ -380,10 +1299,15 @@ button { font-family: inherit; cursor: pointer; border: none; }
   .title { font-size: 38px; }
   .settings-sliders, .settings-grid2 { grid-template-columns: 1fr; }
   .stat-row { flex-direction: column; }
+  .shop-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
 }
 @media (max-width: 480px) {
   .tips-grid { gap: 14px; }
   .settings-grid3 { grid-template-columns: 1fr; }
   .unlocked-grid { grid-template-columns: 1fr; }
   .rewards-title { font-size: 34px; }
+  .shop-title { font-size: 34px; }
+  .actions { gap: 10px; }
+  .btn-hint, .btn-boost { flex: 1 1 auto; }
+  .btn-check { flex: 1 1 100%; order: 3; }
 }

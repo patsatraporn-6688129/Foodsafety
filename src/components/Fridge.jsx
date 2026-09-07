@@ -10,28 +10,38 @@ const ZONES = {
   bottom: { left: '4%', top: '31%',  width: '44%', height: '14.5%' },
 }
 
-// Locked compartments: a translucent grey overlay + a centred white padlock,
-// matching the reference art.
-const LOCK_REGIONS = [
-  // left crisper + freezer drawers
-  { left: '3%',  top: '47%', width: '45.5%', height: '51%', lockLeft: '26%', lockTop: '61%' },
-  // right door bins
-  { left: '51.5%', top: '6%',  width: '46.5%', height: '57%', lockLeft: '74.5%', lockTop: '34%' },
-  // bottom-right freezer
-  { left: '51.5%', top: '65.5%', width: '46.5%', height: '32.5%', lockLeft: '74.5%', lockTop: '81%' },
-]
+// Named fridge compartments that a level can grey-out + padlock when they're
+// not used as drop targets (keeps players from wondering where things go).
+// Each level lists the keys it wants locked in its data file (`locks: [...]`).
+const LOCK_REGIONS = {
+  // individual left shelves
+  leftTop:      { left: '3%',    top: '2%',    width: '45.5%', height: '14%',   lockLeft: '26%',   lockTop: '9%' },
+  leftMid:      { left: '3%',    top: '31%',   width: '45.5%', height: '14%',   lockLeft: '26%',   lockTop: '38%' },
+  leftUpperMid: { left: '3%',    top: '17.5%', width: '45.5%', height: '13%',   lockLeft: '26%',   lockTop: '24%' },
+
+  // whole bottom-left: crisper + freezer drawers, one big lock (centred lower).
+  // Bottom stops at ~86% — right at the last drawer's edge, above the base/legs.
+  leftLower:    { left: '3%',    top: '46%',   width: '45.5%', height: '40%',   lockLeft: '26%',   lockTop: '66%' },
+  // bottom-left freezer drawers only (crisper above stays open)
+  leftFreezer:  { left: '3%',    top: '64%',   width: '45.5%', height: '22%',   lockLeft: '26%',   lockTop: '75%' },
+  // the whole right door (covers up to the top rim)
+  door:         { left: '51.5%', top: '3%',    width: '46.5%', height: '60%',   lockLeft: '74.5%', lockTop: '33%' },
+  // bottom-right freezer — stops at ~88% (base below)
+  freezerRight: { left: '51.5%', top: '63%',   width: '46.5%', height: '25%',   lockLeft: '74.5%', lockTop: '75%' },
+}
 
 export default function Fridge({
-  shelves, placements, itemsById, selectedId, reveal,
-  onDropItem, onPickPlaced, onShelfClick,
+  shelves, placements, itemsById, selectedId, reveal, hintShelfId,
+  onDropItem, onPickPlaced, onShelfClick, onZoomClick, locks = [],
 }) {
+  const lockList = locks.map((k) => LOCK_REGIONS[k]).filter(Boolean)
   return (
     <div className="fridge-scene">
       <div className="fridge-img-wrap">
         <img className="fridge-photo" src={FRIDGE_IMG} alt="Fridge" draggable="false" />
 
-        {/* Grey overlays over the locked areas */}
-        {LOCK_REGIONS.map((r, i) => (
+        {/* Grey overlays over the unused compartments for this level */}
+        {lockList.map((r, i) => (
           <div
             key={'ov' + i}
             className="lock-overlay"
@@ -51,15 +61,17 @@ export default function Fridge({
               items={items}
               active={!!selectedId && !reveal}
               reveal={reveal}
+              hint={shelf.id === hintShelfId}
               onDropItem={onDropItem}
               onPickPlaced={onPickPlaced}
               onShelfClick={onShelfClick}
+              onZoomClick={onZoomClick}
             />
           )
         })}
 
-        {/* Centred white padlocks */}
-        {LOCK_REGIONS.map((r, i) => (
+        {/* Centred white padlocks over the locked compartments */}
+        {lockList.map((r, i) => (
           <span
             key={'lk' + i}
             className="fridge-lock"
@@ -84,37 +96,59 @@ function LockIcon() {
   )
 }
 
-function Zone({ shelf, items, active, reveal, onDropItem, onPickPlaced, onShelfClick }) {
-  const allowDrop = (e) => { if (!reveal) e.preventDefault() }
+function Zone({ shelf, items, active, reveal, hint, onDropItem, onPickPlaced, onShelfClick, onZoomClick }) {
+  const locked = !!shelf.locked
+  const isZoom = !!shelf.zoomTrigger
+  const allowDrop = (e) => { if (!reveal && !locked && !isZoom) e.preventDefault() }
   const handleDrop = (e) => {
-    if (reveal) return
+    if (reveal || locked || isZoom) return
     e.preventDefault()
     const id = e.dataTransfer.getData('text/plain')
     if (id) onDropItem(id, shelf.id)
   }
+  const handleClick = () => {
+    if (locked) return
+    if (isZoom) { onZoomClick?.(shelf.id); return }
+    if (!reveal) onShelfClick(shelf.id)
+  }
   return (
     <div
-      className={'zone' + (active ? ' zone--active' : '')}
-      style={{ ...ZONES[shelf.id], '--shelf-color': shelf.color }}
+      className={'zone'
+        + (active && !locked && !isZoom ? ' zone--active' : '')
+        + (locked ? ' zone--locked' : '')
+        + (isZoom ? ' zone--zoom' : '')
+        + (hint && !locked ? ' zone--hint' : '')}
+      style={{ ...(shelf.zone || ZONES[shelf.id]), '--shelf-color': shelf.color }}
       onDragOver={allowDrop}
       onDrop={handleDrop}
-      onClick={() => { if (!reveal) onShelfClick(shelf.id) }}
+      onClick={handleClick}
     >
       <span className="zone-tag">{shelf.name}</span>
-      <div className="zone-items">
-        {items.map((it) => {
-          const mark = reveal ? (it.shelf === shelf.id ? 'correct' : 'wrong') : undefined
-          return (
-            <ItemChip
-              key={it.id}
-              item={it}
-              small
-              mark={mark}
-              onClick={(e) => { e.stopPropagation(); if (!reveal) onPickPlaced(it.id) }}
-            />
-          )
-        })}
-      </div>
+      {locked ? (
+        <div className="zone-lock" title="Sort the shelf above first">
+          <span className="zone-lock-icon"><LockIcon /></span>
+        </div>
+      ) : isZoom ? (
+        <div className="zone-zoom">
+          <span className="zone-zoom-icon">🔍</span>
+          <span className="zone-zoom-label">Click to zoom</span>
+        </div>
+      ) : (
+        <div className="zone-items">
+          {items.map((it) => {
+            const mark = reveal ? (it.shelf === shelf.id ? 'correct' : 'wrong') : undefined
+            return (
+              <ItemChip
+                key={it.id}
+                item={it}
+                small
+                mark={mark}
+                onClick={(e) => { e.stopPropagation(); if (!reveal) onPickPlaced(it.id) }}
+              />
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
