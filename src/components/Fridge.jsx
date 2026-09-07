@@ -13,21 +13,26 @@ const ZONES = {
 // Named fridge compartments that a level can grey-out + padlock when they're
 // not used as drop targets (keeps players from wondering where things go).
 // Each level lists the keys it wants locked in its data file (`locks: [...]`).
-const LOCK_REGIONS = {
-  // individual left shelves
-  leftTop:      { left: '3%',    top: '2%',    width: '45.5%', height: '14%',   lockLeft: '26%',   lockTop: '9%' },
-  leftMid:      { left: '3%',    top: '31%',   width: '45.5%', height: '14%',   lockLeft: '26%',   lockTop: '38%' },
-  leftUpperMid: { left: '3%',    top: '17.5%', width: '45.5%', height: '13%',   lockLeft: '26%',   lockTop: '24%' },
-
-  // whole bottom-left: crisper + freezer drawers, one big lock (centred lower).
-  // Bottom stops at ~86% — right at the last drawer's edge, above the base/legs.
-  leftLower:    { left: '3%',    top: '46%',   width: '45.5%', height: '40%',   lockLeft: '26%',   lockTop: '66%' },
-  // bottom-left freezer drawers only (crisper above stays open)
-  leftFreezer:  { left: '3%',    top: '64%',   width: '45.5%', height: '22%',   lockLeft: '26%',   lockTop: '75%' },
-  // the whole right door (covers up to the top rim)
-  door:         { left: '51.5%', top: '3%',    width: '46.5%', height: '60%',   lockLeft: '74.5%', lockTop: '33%' },
-  // bottom-right freezer — stops at ~88% (base below)
-  freezerRight: { left: '51.5%', top: '63%',   width: '46.5%', height: '25%',   lockLeft: '74.5%', lockTop: '75%' },
+// Each region is just its rectangle (left/top/width/height as % of the photo);
+// the white padlock is auto-centred inside it at render time, so it can never
+// drift out of its grey overlay. Bottoms of the freezer/lower locks run to ~91%
+// — the drawer fronts end there, just above the base/legs.
+// Each rectangle hugs one real compartment of the fridge photo (left/top/
+// width/height as % of the image) so a locked cover sits exactly over its
+// slot; the padlock is auto-centred inside it at render time.
+export const LOCK_REGIONS = {
+  // left food shelves — fill each compartment but leave ~2% gap at the dividers
+  leftTop:      { left: '3.5%',  top: '2.5%',  width: '45%',   height: '13.5%' },
+  leftUpperMid: { left: '3.5%',  top: '18%',   width: '45%',   height: '13%' },
+  leftMid:      { left: '3.5%',  top: '33%',   width: '45%',   height: '12%' },
+  // left crisper drawer
+  crisper:      { left: '3.5%',  top: '47%',   width: '45%',   height: '14.5%' },
+  // left freezer (both drawers, down to just above the base)
+  leftFreezer:  { left: '3.5%',  top: '64%',   width: '45%',   height: '30%' },
+  // right door (fills the door interior, gap above the freezer)
+  door:         { left: '53%',   top: '2%',    width: '45%',   height: '59.5%' },
+  // bottom-right freezer (down to just above the base)
+  freezerRight: { left: '53%',   top: '64%',   width: '45%',   height: '30%' },
 }
 
 export default function Fridge({
@@ -70,12 +75,12 @@ export default function Fridge({
           )
         })}
 
-        {/* Centred white padlocks over the locked compartments */}
+        {/* White padlocks, auto-centred inside each locked region */}
         {lockList.map((r, i) => (
           <span
             key={'lk' + i}
             className="fridge-lock"
-            style={{ left: r.lockLeft, top: r.lockTop }}
+            style={{ left: `calc(${r.left} + ${r.width} / 2)`, top: `calc(${r.top} + ${r.height} / 2)` }}
           >
             <LockIcon />
           </span>

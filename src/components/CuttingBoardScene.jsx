@@ -1,17 +1,12 @@
 import { FRIDGE_IMG } from '../gameData.js'
 import ItemChip from './ItemChip.jsx'
+import { LOCK_REGIONS } from './Fridge.jsx' // single source of truth for lock rects
 
 // Drop-zone rectangles over the left fridge compartment (same coords as Fridge.jsx).
 const ZONES = {
   top:    { left: '4%', top: '1%',   width: '44%', height: '16.5%' },
   middle: { left: '4%', top: '17%',  width: '44%', height: '14.5%' },
   bottom: { left: '4%', top: '31%',  width: '44%', height: '14.5%' },
-}
-
-const LOCK_REGIONS = {
-  leftLower:    { left: '3%',    top: '46%',   width: '45.5%', height: '40%',   lockLeft: '26%',   lockTop: '66%' },
-  door:         { left: '51.5%', top: '3%',    width: '46.5%', height: '60%',   lockLeft: '74.5%', lockTop: '33%' },
-  freezerRight: { left: '51.5%', top: '63%',   width: '46.5%', height: '25%',   lockLeft: '74.5%', lockTop: '75%' },
 }
 
 function LockIcon() {
@@ -142,7 +137,11 @@ export default function CuttingBoardScene({
           })}
 
           {lockList.map((r, i) => (
-            <span key={'lk' + i} className="fridge-lock" style={{ left: r.lockLeft, top: r.lockTop }}>
+            <span
+              key={'lk' + i}
+              className="fridge-lock"
+              style={{ left: `calc(${r.left} + ${r.width} / 2)`, top: `calc(${r.top} + ${r.height} / 2)` }}
+            >
               <LockIcon />
             </span>
           ))}

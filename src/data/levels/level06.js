@@ -67,7 +67,7 @@ export default {
   tips: TIPS,
   // Padlock every compartment except the top-left shelf — that one shows
   // "🔍 Click to zoom" instead and opens the close-up FEFO shelf.
-locks: ['leftUpperMid', 'leftMid', 'leftLower', 'door', 'freezerRight'],
+locks: ['leftUpperMid', 'leftMid', 'crisper', 'leftFreezer', 'door', 'freezerRight'],
   shelves: QUEUE_SLOTS,
   items: [
     { id: 'l6-milk',    shelf: 'pos-1' }, // 1 day left  — use first

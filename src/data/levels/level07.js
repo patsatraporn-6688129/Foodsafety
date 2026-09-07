@@ -34,7 +34,7 @@ export default {
   // Items sit on a table (instead of the default side tray) and can be
   // dragged either into the fridge or into the trash can under the table.
   layout: 'table',
-  locks: ['leftLower', 'door', 'freezerRight'],
+  locks: ['crisper', 'leftFreezer', 'door', 'freezerRight'],
   shelves: [
     {
       id: 'top',

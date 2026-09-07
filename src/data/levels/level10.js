@@ -53,7 +53,7 @@ export default {
     },
     {
       id: 'door', name: 'Door Bin', hint: 'Condiments & drinks', color: '#F0956B',
-      zone: { left: '53%', top: '12%', width: '43%', height: '15%' },
+      zone: { left: '53%', top: '22%', width: '43%', height: '15%' },
     },
     {
       id: 'freezer', name: 'Freezer', hint: 'Frozen', color: '#57C4A6',

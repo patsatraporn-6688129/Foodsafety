@@ -43,7 +43,7 @@ export default {
   n: 4,
   layout: 'boards',
   tips: TIPS,
-  locks: ['leftLower', 'door', 'freezerRight'],
+  locks: ['crisper', 'leftFreezer', 'door', 'freezerRight'],
   // The three fridge slots a board can be dropped onto (any board, any slot).
   shelves: [
     { id: 'top',    name: 'Top Shelf' },

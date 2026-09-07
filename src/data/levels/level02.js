@@ -35,7 +35,7 @@ export default {
   tips: TIPS,
   // Only the left-hand shelves are in play — grey out the door, crisper/freezer
   // and bottom-right freezer so it's clear where items go.
-  locks: ['leftLower', 'door', 'freezerRight'],
+  locks: ['crisper', 'leftFreezer', 'door', 'freezerRight'],
   items: [
     { id: 'boxed-rice',  shelf: 'top' },
     { id: 'salad',       shelf: 'top' },

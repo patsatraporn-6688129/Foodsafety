@@ -252,7 +252,14 @@ export default function App() {
     if (!ok) return
     setInventory((inv) => ({ ...inv, [itemId]: qty }))
     if (itemId === 'time') setTimeLeft((t) => t + 15)
-    else if (itemId === 'hint') setFreeHints((n) => n + 1)
+    else if (itemId === 'hint') {
+      // Reveal a hint for a still-unplaced item right away — no score penalty.
+      const target = selectedId ? itemsById[selectedId] : trayItems[0]
+      if (target) {
+        setHintShelfId(target.shelf)
+        setTimeout(() => setHintShelfId(null), 1800)
+      }
+    }
     else if (itemId === 'multiplier') setScoreX2(true)
     audio.sfxPlace()
   }
@@ -673,20 +680,6 @@ export default function App() {
     audio.sfxTrash()
   }
 
-  // 4.7 — Hint: points at the shelf the selected item (or the first item still
-  // in the tray, if nothing is selected) belongs on, glows it briefly, and
-  // deducts points immediately.
-  const useHint = () => {
-    if (screen !== 'game') return
-    const target = selectedId ? itemsById[selectedId] : trayItems[0]
-    if (!target) return // nothing left to hint
-    setHintShelfId(target.shelf)
-    // A "Buy Hint" power-up credit cancels the usual -5 penalty for one hint.
-    if (freeHints > 0) setFreeHints((n) => n - 1)
-    else setHintsUsed((n) => n + 1)
-    audio.sfxHint()
-    setTimeout(() => setHintShelfId(null), 1800)
-  }
 
   // NOTE: there is intentionally no "live score" computed here anymore —
   // score is fully hidden during play and only revealed once, all at once,
@@ -941,22 +934,15 @@ export default function App() {
                   selectedId={selectedId}
                   onSelect={(id) => setSelectedId((s) => (s === id ? null : id))}
                   onReturnDrop={returnItem}
+                  wide={level === 10}
                 />
               )}
             </div>
             )}
 
             {screen === 'game' && (
-              <InventoryBar inventory={inventory} scoreX2Active={scoreX2} onUse={requestUseItem} />
-            )}
-
-            {screen === 'game' && (
               <div className="actions">
-                {difficulty === 2 && (
-                  <button className="btn btn-hint" onClick={useHint}>
-                    {freeHints > 0 ? `💡 Hint (free · ${freeHints} left)` : `💡 Hint (-5)${hintsUsed > 0 ? ` · used ${hintsUsed}` : ''}`}
-                  </button>
-                )}
+                <InventoryBar inventory={inventory} scoreX2Active={scoreX2} onUse={requestUseItem} />
                 <button
                   className="btn btn-check"
                   disabled={!allPlaced}
@@ -1490,6 +1476,8 @@ function Tips({ tips, onStart }) {
  * continue button. Level data supplies the copy (see data/levels/level10.js);
  * the illustration is a lightweight built-in SVG scene so no external art
  * asset is needed. */
+// A single centred card: supermarket art on top, then the story copy and the
+// Let's Play button. No timer — the player starts the level with the button.
 function Story({ story, onContinue }) {
   return (
     <main className="story">
@@ -1647,21 +1635,21 @@ function Hud({ level, timeLeft, scoreX2, freeHints }) {
       {hasBoosts && (
         <div className="hud-boosts">
           {scoreX2 && <span className="hud-boost-chip">🛍 x2 Score</span>}
-          {freeHints > 0 && <span className="hud-boost-chip">💡 Free Hint ×{freeHints}</span>}
+          {freeHints > 0 && <span className="hud-boost-chip">💡 Hint ×{freeHints}</span>}
         </div>
       )}
     </div>
   )
 }
 
-/* ---------- Inventory row: durable power-ups the player can tap to use
-   during THIS level (sits right above the Hint / Check Answers row).
-   Only shows items the player actually owns — empty-handed players see
-   nothing here, same as Hud's boost chips. ---------- */
+/* ---------- Inventory row: the durable power-ups the player can tap to use
+   during THIS level. Only items the player actually owns are shown; an
+   empty-handed player sees nothing here. Tapping 🔍 Hint reveals a hint with
+   no score penalty. ---------- */
 function InventoryBar({ inventory, scoreX2Active, onUse }) {
   const defs = [
     { id: 'time', icon: '⏰', label: '+15s' },
-    { id: 'hint', icon: '🔍', label: 'Free Hint' },
+    { id: 'hint', icon: '🔍', label: 'Hint' },
     { id: 'multiplier', icon: '2X', label: 'Score x2' },
   ]
   const owned = defs
@@ -1675,7 +1663,7 @@ function InventoryBar({ inventory, scoreX2Active, onUse }) {
         return (
           <button
             key={it.id}
-            className="inv-chip"
+            className={'inv-chip inv-chip--' + it.id}
             disabled={alreadyActive}
             onClick={() => onUse(it.id)}
             title={alreadyActive ? 'Already active this level' : `Use ${it.label}`}
@@ -1694,7 +1682,7 @@ function InventoryBar({ inventory, scoreX2Active, onUse }) {
 function InventoryConfirmCard({ itemId, onConfirm, onCancel }) {
   const copy = {
     time: { icon: '⏰', tone: 'purple', title: 'Use +15 Seconds?', text: "Adds 15 seconds straight to this level's timer, right now." },
-    hint: { icon: '🔍', tone: 'gold', title: 'Use Free Hint?', text: 'Reveals a Hint for this level with no −5 point penalty.' },
+    hint: { icon: '🔍', tone: 'gold', title: 'Use Hint?', text: 'Reveals a Hint for this level with no −5 point penalty.' },
     multiplier: { icon: '2X', tone: 'blue', title: 'Use Score x2?', text: "Doubles this level's Final Score for the rest of the level — coins earned double too." },
   }[itemId] ?? { icon: '❔', tone: 'gold', title: 'Use item?', text: '' }
 

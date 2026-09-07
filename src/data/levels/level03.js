@@ -38,9 +38,9 @@ export default {
   locks: ['leftTop', 'leftMid', 'leftFreezer'],
   shelves: [
     { id: 'door-top', name: 'Door — Top', hint: 'Condiments', color: '#F0956B',
-      zone: { left: '53%', top: '12%', width: '43%', height: '15%' } },
+      zone: { left: '53%', top: '6%', width: '43%', height: '15%' } },
     { id: 'door-low', name: 'Door — Low', hint: 'Drinks', color: '#7FD3B4',
-      zone: { left: '53%', top: '31%', width: '43%', height: '15%' } },
+      zone: { left: '53%', top: '22%', width: '43%', height: '15%' } },
     { id: 'butter',   name: 'Butter',     hint: 'Spreads', color: '#F6D24B',
       zone: { left: '5%',  top: '17%', width: '34%', height: '15%' } },
     { id: 'crisper',  name: 'Crisper',    hint: 'Fruit & veg', color: '#7FD3B4',

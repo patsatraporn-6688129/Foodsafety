@@ -280,21 +280,27 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .tips-note { letter-spacing: 2px; font-weight: 800; color: var(--yellow-dark); font-size: 12px; margin-top: 12px; }
 
 /* ---------- Story intro (e.g. Level 10's supermarket run) ---------- */
+/* Level 10's "grocery run" intro — one centred, wide (rectangular) card:
+   supermarket art across the top, then the copy, then the Let's Play button. */
 .story { flex: 1; padding: 30px 20px 50px; display: flex; align-items: center; justify-content: center; }
 .story-card {
-  background: #fff; width: 460px; max-width: 92vw; border-radius: 28px;
-  padding: 30px 34px 34px; box-shadow: var(--shadow-lg); text-align: center;
+  background: #fff; width: 620px; max-width: 92vw; border-radius: 30px;
+  padding: 34px 44px 38px; box-shadow: var(--shadow-lg); text-align: center;
 }
 .story-scene {
-  width: 100%; max-width: 320px; height: auto; margin: 0 auto 20px; display: block;
-  background: linear-gradient(180deg, #eaf6f0, #f8f4e6); border-radius: 20px; padding: 10px;
-  object-fit: contain; /* keeps supermarket.png's own aspect ratio if it differs from 320:180 */
+  width: 100%; height: auto; margin: 0 auto 26px; display: block;
+  background: linear-gradient(180deg, #eaf6f0, #f8f4e6); border-radius: 22px; padding: 14px;
+  object-fit: contain; /* keeps supermarket.png's own aspect ratio */
 }
-.story-title { color: var(--green-dark); font-weight: 900; font-size: 28px; margin: 0 0 8px; }
-.story-sub { color: var(--ink); font-weight: 600; font-size: 15px; margin: 0 0 10px; }
-.story-caption { color: var(--muted); font-weight: 600; font-size: 14px; line-height: 1.5; margin: 0 0 22px; }
-.story-caption strong { color: var(--green-dark); }
+.story-title { color: var(--green-dark); font-weight: 900; font-size: 32px; line-height: 1.15; letter-spacing: -.4px; margin: 0 0 12px; }
+.story-sub { color: var(--ink); font-weight: 700; font-size: 16px; line-height: 1.5; max-width: 440px; margin: 0 auto 14px; }
+.story-caption { color: var(--muted); font-weight: 600; font-size: 15px; line-height: 1.6; max-width: 400px; margin: 0 auto 28px; }
+.story-caption strong { color: var(--green-dark); display: inline-block; margin-top: 2px; }
 .story-start { width: 100%; }
+@media (max-width: 560px) {
+  .story-card { padding: 26px 24px 30px; border-radius: 26px; }
+  .story-title { font-size: 26px; }
+}
 
 /* ---------- How to Play (Help) ---------- */
 .howto { flex: 1; padding: 46px 20px 60px; display: flex; flex-direction: column; align-items: center; text-align: center; }
@@ -376,19 +382,35 @@ button { font-family: inherit; cursor: pointer; border: none; }
   border-radius: 999px; padding: 6px 12px; white-space: nowrap;
 }
 
-/* ---------- Inventory row (in-game, sits right above Hint/Check Answers) ---------- */
-.inv-bar { display: flex; justify-content: center; align-items: center; gap: 10px; padding: 6px 20px 0; flex-wrap: wrap; }
+/* ---------- Inventory power-ups: sit on the SAME row as the Check/Place
+   button and stretch to its height (see .actions align-items: stretch). ---------- */
+.inv-bar { display: contents; }
 .inv-chip {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: #fff; border: 2px solid #cfe6da; color: var(--green-dark);
-  font-weight: 800; font-size: 13px; border-radius: 999px; padding: 8px 14px;
-  cursor: pointer; box-shadow: 0 2px 0 #cfe6da; transition: transform .1s ease;
+  display: inline-flex; align-items: center; gap: 11px;
+  background: linear-gradient(180deg, #ffffff, #f7fbf8);
+  border: 2px solid var(--green); color: var(--green-dark);
+  font-weight: 800; font-size: 15px; border-radius: 18px; padding: 0 16px 0 8px;
+  cursor: pointer; box-shadow: 0 6px 0 rgba(13,115,85,.28), 0 10px 16px rgba(40,60,50,.12);
+  transition: transform .1s ease, box-shadow .1s ease;
 }
-.inv-chip:hover:not(:disabled) { transform: translateY(-2px); }
-.inv-chip:active:not(:disabled) { transform: translateY(0); }
-.inv-chip:disabled { opacity: .55; cursor: not-allowed; }
-.inv-chip-ico { font-size: 15px; }
-.inv-chip-qty { background: var(--mint); border-radius: 999px; padding: 1px 8px; font-size: 12px; }
+.inv-chip:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 0 rgba(13,115,85,.28), 0 14px 20px rgba(40,60,50,.16); }
+.inv-chip:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 3px 0 rgba(13,115,85,.28); }
+.inv-chip:disabled { cursor: not-allowed; opacity: .8; box-shadow: 0 6px 0 rgba(13,115,85,.18); }
+.inv-chip-ico {
+  width: 36px; height: 36px; border-radius: 12px; flex: 0 0 auto;
+  display: grid; place-items: center; font-size: 17px; font-weight: 900;
+  background: var(--mint); color: var(--green-dark);
+}
+.inv-chip-label { line-height: 1.1; white-space: nowrap; }
+.inv-chip-qty {
+  background: var(--green); color: #fff; border-radius: 999px;
+  padding: 3px 10px; font-size: 12px; font-weight: 900; min-width: 28px; text-align: center;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.12);
+}
+/* per-item accent colours on the icon badge (count stays green for all) */
+.inv-chip--time .inv-chip-ico { background: #e7ecff; color: #3a54b4; }
+.inv-chip--hint .inv-chip-ico { background: #fff1c4; color: #8a6d00; }
+.inv-chip--multiplier .inv-chip-ico { background: #ddefff; color: #1f74b4; }
 
 /* ---------- Board ---------- */
 .board { display: grid; grid-template-columns: 1.35fr 0.65fr; gap: 22px; padding: 16px 24px 10px; align-items: start; }
@@ -460,8 +482,8 @@ button { font-family: inherit; cursor: pointer; border: none; }
 /* Grey shade over locked compartments */
 .lock-overlay {
   position: absolute;
-  background: rgba(96, 104, 108, 0.5);
-  border-radius: 14px;
+  background: rgba(90, 98, 102, 0.74);
+  border-radius: 16px;
   pointer-events: none;
 }
 /* Centred white padlock */
@@ -647,6 +669,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
 .tray { background: linear-gradient(180deg, #fbf1b8, #f8eca4); border-radius: 24px; padding: 20px; min-height: 380px; box-shadow: var(--shadow); }
 .tray-title { font-weight: 900; color: #9a8400; margin-bottom: 16px; font-size: 15px; }
 .tray-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; justify-items: center; }
+.tray-grid--wide { grid-template-columns: repeat(4, 1fr); gap: 10px; }
 .tray-empty { grid-column: 1 / -1; text-align: center; color: #9a8400; font-weight: 800; padding: 60px 0; }
 
 /* ---------- Level 4: Cutting Boards (เขียง) — prep-station tray ---------- */
@@ -816,7 +839,7 @@ button { font-family: inherit; cursor: pointer; border: none; }
 
 
 /* ---------- Actions ---------- */
-.actions { display: flex; justify-content: center; align-items: center; gap: 14px; padding: 10px 20px 44px; flex-wrap: wrap; }
+.actions { display: flex; justify-content: center; align-items: stretch; gap: 14px; padding: 10px 20px 44px; flex-wrap: wrap; }
 
 /* ---------- Modal ---------- */
 .modal-backdrop { position: fixed; inset: 0; background: rgba(30, 45, 40, .5); backdrop-filter: blur(3px); display: grid; place-items: center; z-index: 40; padding: 20px; }

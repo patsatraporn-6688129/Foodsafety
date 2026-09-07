@@ -1,6 +1,6 @@
 import ItemChip from './ItemChip.jsx'
 
-export default function Tray({ items, selectedId, onSelect, onReturnDrop }) {
+export default function Tray({ items, selectedId, onSelect, onReturnDrop, wide }) {
   const allowDrop = (e) => e.preventDefault()
   const handleDrop = (e) => {
     e.preventDefault()
@@ -15,7 +15,7 @@ export default function Tray({ items, selectedId, onSelect, onReturnDrop }) {
       onDrop={handleDrop}
     >
       <div className="tray-title">Items to Sort</div>
-      <div className="tray-grid">
+      <div className={'tray-grid' + (wide ? ' tray-grid--wide' : '')}>
         {items.map((it) => (
           <ItemChip
             key={it.id}
